@@ -1,29 +1,20 @@
 import React from 'react';
-
-//  Імпорт стилів
-import css from '../ContactList/ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'redux/fetch';
-import { getContacts, getFilter } from 'redux/selector';
-// Компонеет для рендеру списку контактів
+import { getContacts } from 'redux/selector';
+
+import css from '../ContactList/ContactList.module.css';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
-  const filterValue = useSelector(getFilter);
   const contacts = useSelector(getContacts);
-
-  const getVisible = () =>
-    contacts.items?.filter(e =>
-      e.name.toLowerCase().includes(filterValue.toLowerCase())
-    );
-  const getVisibleContacts = getVisible();
 
   return (
     <div>
       <ul className={css.ul}>
-        {getVisibleContacts?.map(({ id, name, number }) => (
+        {contacts.map(({ id, name, phone }) => (
           <li key={id}>
-            {name}: {number}
+            {name}: {phone}
             <button
               type="button"
               onClick={() => {
