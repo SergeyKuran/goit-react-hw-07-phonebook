@@ -19,7 +19,8 @@ const fetchContactFulfilled = (state, action) => {
 const addContactFulfilled = (state, action) => {
   state.contacts.isLoading = false;
   state.contacts.error = null;
-  state.items.push(action.payload);
+  state.contacts.items.push(action.payload);
+  console.log(state.contacts.items);
 };
 
 const deleteContactFulfilled = (state, action) => {
@@ -39,7 +40,6 @@ export const contactSlice = createSlice({
       isLoading: false,
       error: null,
     },
-    filter: '',
   },
   extraReducers: builder =>
     builder
