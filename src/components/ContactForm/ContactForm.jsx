@@ -1,22 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/fetch';
+import { getContacts } from 'redux/selector';
+import Notiflix from 'notiflix';
 
-// Імпорт стилів
 import css from '../ContactForm/ContactForm.module.css';
-import { useDispatch } from 'react-redux';
-import { addContact, fetchContacts } from 'redux/fetch';
 
-// Клас для відображення форми
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispath = useDispatch();
+  const selector = useSelector(getContacts);
 
-  useEffect(() => {
-    const fetch = fetchContacts();
-    console.log(fetch);
-  }, []);
-
-  //  Метод зв'язки данних імпуту зі стейтом
   const handleChange = evt => {
     const { name, value } = evt.target;
 
@@ -34,12 +29,20 @@ export const ContactForm = () => {
     }
   };
 
-  //  Метод для форми
   const handleSubmit = evt => {
     evt.preventDefault();
 
+    const find = selector.some(
+      el => el.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (find) {
+      return Notiflix.Notify.warning(`${name} is already in contacts`);
+    }
+    Notiflix.Notify.success('Operation success!');
+
     dispath(addContact({ name, phone: number }));
-    //Анулювання введених данних
+
     setName('');
     setNumber('');
   };
