@@ -12,13 +12,13 @@ export const ContactList = () => {
   const contacts = useSelector(getContacts);
   const selector = useSelector(getFilter);
 
-  const getVisible = () =>
-    contacts.filter(e => e.name.toLowerCase().includes(selector.toLowerCase()));
-  const getVisibleContacts = getVisible();
-
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+
+  const getVisible = () =>
+    contacts.filter(e => e.name.toLowerCase().includes(selector.toLowerCase()));
+  const getVisibleContacts = getVisible();
 
   return (
     <div>
