@@ -13,7 +13,7 @@ const rejected = (state, action) => {
 const fetchContactFulfilled = (state, action) => {
   state.contacts.isLoading = false;
   state.contacts.error = null;
-  state.items = action.payload;
+  state.contacts.items = action.payload;
 };
 
 const addContactFulfilled = (state, action) => {

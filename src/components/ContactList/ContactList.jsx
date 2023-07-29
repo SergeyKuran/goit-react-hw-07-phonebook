@@ -1,6 +1,7 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/fetch';
+import { deleteContact, fetchContacts } from 'redux/fetch';
 import { getFilter } from 'redux/filterSlice';
 import { getContacts } from 'redux/selector';
 
@@ -14,6 +15,10 @@ export const ContactList = () => {
   const getVisible = () =>
     contacts.filter(e => e.name.toLowerCase().includes(selector.toLowerCase()));
   const getVisibleContacts = getVisible();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div>
